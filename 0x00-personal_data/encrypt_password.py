@@ -4,7 +4,6 @@ Module for password encryption and validation.
 """
 
 import bcrypt
-from typing import ByteString
 
 
 def hash_password(password: str) -> ByteString:
@@ -15,8 +14,10 @@ def hash_password(password: str) -> ByteString:
     Returns:
         ByteString: The hashed password as a byte string.
     """
-    salt = bcrypt.gensalt()
-    return bcrypt.hashpw(password.encode(), salt)
+    encoded = password.encode()
+    hashed = bcrypt.hashpw(encoded, bcrypt.gensalt())
+
+    return hashed
 
 
 def is_valid(hashed_password: ByteString, password: str) -> bool:
@@ -29,4 +30,8 @@ def is_valid(hashed_password: ByteString, password: str) -> bool:
         bool: True if the password matches the hashed password,
         False otherwise.
     """
-    return bcrypt.checkpw(password.encode(), hashed_password)
+    valid = False
+    encoded = password.encode()
+    if bcrypt.checkpw(encoded, hashed_password):
+        valid = True
+    return valid
