@@ -3,9 +3,11 @@
 Module for logging with obfuscation of sensitive information.
 Provides functions and classes to handle sensitive data logging.
 """
-
+import re
 import logging
-from typing import Tuple, List
+from os import environ
+from typing import List
+import mysql.connector
 
 # Define PII fields that need obfuscation
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
@@ -63,3 +65,17 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(RedactingFormatter(list(PII_FIELDS)))
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> connection.MySQLConnection:
+    """
+    Connects to the MySQL database securely using environment variables.
+    Returns:
+        connection.MySQLConnection: MySQL connection object.
+    """
+    return mysql.connector.connect(
+        username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+        password = os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+        host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+        db_name = os.getenv("PERSONAL_DATA_DB_NAME")
+    )
