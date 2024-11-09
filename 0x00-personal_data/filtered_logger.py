@@ -6,7 +6,9 @@ personal data fields in log messages.
 
 import re
 from typing import List
-
+import logging
+from os import environ
+import mysql.connector
 
 def filter_datum(
                     fields: List[str],
