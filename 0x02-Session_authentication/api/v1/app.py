@@ -34,6 +34,10 @@ elif AUTH_TYPE == 'session_auth':
 elif AUTH_TYPE == 'session_exp_auth':
     from api.v1.auth.session_exp_auth import SessionExpAuth
     auth = SessionExpAuth()  # Use session authentication with expiration
+elif AUTH_TYPE == 'session_db_auth':
+    from api.v1.auth.session_db_auth import SessionDBAuth
+    # Use session authentication stored in the database
+    auth = SessionDBAuth()
 
 
 @app.before_request
