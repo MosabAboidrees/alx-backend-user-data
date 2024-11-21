@@ -12,6 +12,7 @@ from uuid import uuid4
 
 from typing import Union
 
+
 def _hash_password(password: str) -> str:
     """
     Hashes a password using bcrypt's hashpw function.
@@ -23,6 +24,7 @@ def _hash_password(password: str) -> str:
     # Hash the password with the generated salt
     hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     return hashed
+
 
 def _generate_uuid() -> str:
     """Summary
