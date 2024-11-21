@@ -71,7 +71,6 @@ class DB:
             raise NoResultFound
         return user
 
-
     def update_user(self, user_id: int, **kwargs) -> None:
         """
         Update a user's attributes.
@@ -82,7 +81,8 @@ class DB:
         Returns:
             None: Updates the user and commits changes to the database.
         Raises:
-            ValueError: If any argument does not correspond to a user attribute.
+            ValueError: If any argument does not correspond
+            to a user attribute.
         """
         user = self.find_user_by(id=user_id)
 
