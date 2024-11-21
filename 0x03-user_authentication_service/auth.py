@@ -80,9 +80,14 @@ class Auth:
             bool: True if credentials are valid, False otherwise.
         """
         try:
-            # find the user with the given email
             user = self._db.find_user_by(email=email)
         except NoResultFound:
             return False
-        # check validity of password
-        return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
+
+        user_password = user.hashed_password
+        encoded_password = password.encode()
+
+        if bcrypt.checkpw(encoded_password, user_password):
+            return True
+
+        return False
