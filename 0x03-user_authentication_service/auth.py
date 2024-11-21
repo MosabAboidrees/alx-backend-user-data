@@ -7,7 +7,7 @@ This module contains helper functions for password hashing
 import bcrypt
 from db import DB
 from user import User
-from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFoung
 
 def _hash_password(password: str) -> bytes:
     """
@@ -35,7 +35,7 @@ class Auth:
         """
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> Type[User]:
+    def register_user(self, email: str, password: str) -> User:
         """
         Register a new user with an email and password.
         Args:
