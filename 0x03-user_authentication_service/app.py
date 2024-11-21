@@ -4,15 +4,18 @@ Basic Flask app
 This module defines a basic Flask application with a single route.
 """
 
-from flask import Flask, jsonify, request
 from auth import Auth
-
-AUTH = Auth()
+from flask import (Flask,
+                   jsonify,
+                   request,
+                   abort,
+                   redirect)
 
 app = Flask(__name__)
+AUTH = Auth()
 
 
-@app.route("/", methods=["GET"])
+@app.route('/', methods=['GET'])
 def index() -> str:
     """
     Handle GET request to the root route.
@@ -22,7 +25,7 @@ def index() -> str:
     return jsonify({"message": "Bienvenue"})
 
 
-@app.route("/users", methods=["POST"])
+@app.route('/users', methods=['POST'])
 def users() -> str:
     """
     Handle POST request to register a new user.
@@ -33,8 +36,8 @@ def users() -> str:
     Raises:
         400: If the user is already registered.
     """
-    email = request.form.get("email")
-    password = request.form.get("password")
+    email = request.form['email']
+    password = request.form['password']
 
     try:
         user = AUTH.register_user(email, password)
