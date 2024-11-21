@@ -36,9 +36,9 @@ def users() -> str:
     Raises:
         400: If the user is already registered.
     """
-    email = request.form['email']
-    password = request.form['password']
-
+    email = request.form.get('email')
+    password = request.form.get('password')
+    
     try:
         user = AUTH.register_user(email, password)
         return jsonify({"email": user.email, "message": "user created"})
