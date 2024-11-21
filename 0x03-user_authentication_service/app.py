@@ -8,11 +8,11 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
+
 @app.route("/", methods=["GET"])
-def home():
+def index():
     """
     Handle GET request to the root route.
-
     Returns:
         JSON: A JSON payload with a welcome message.
     """
