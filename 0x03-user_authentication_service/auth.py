@@ -6,11 +6,10 @@ This module contains helper functions for password hashing
 
 import bcrypt
 from db import DB
-from user import User
-from sqlalchemy.orm.exc import NoResultFoung
-from uuid import uuid4
-
+from sqlalchemy.orm.exc import NoResultFound
 from typing import Union
+from user import User
+from uuid import uuid4
 
 
 def _hash_password(password: str) -> str:
@@ -87,7 +86,7 @@ class Auth:
         # check validity of password
         return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
 
-    def create_session(self, email: str) -> Optional[str]:
+    def create_session(self, email: str) -> str:
         """
         Create a session for a user and return the session ID.
         Args:
