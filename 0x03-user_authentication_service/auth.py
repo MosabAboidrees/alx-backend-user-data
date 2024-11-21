@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Auth module
-This module contains helper functions for password hashing.
+This module contains helper functions for password hashing
 """
 
 import bcrypt
