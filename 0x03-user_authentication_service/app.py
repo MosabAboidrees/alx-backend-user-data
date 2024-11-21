@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 
 @app.route("/", methods=["GET"])
-def index():
+def index() -> str:
     """
     Handle GET request to the root route.
     Returns:
