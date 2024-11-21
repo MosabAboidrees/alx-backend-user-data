@@ -101,3 +101,20 @@ class Auth:
             return session_id
         except Exception:
             return None
+
+    def get_user_from_session_id(self, session_id: Optional[str]) -> User:
+        """
+        Retrieve a user from the database based on the session ID.
+        Args:
+            session_id (Optional[str]): The session ID of the user.
+        Returns:
+            Optional[User]: The user object if the session ID is valid,
+            None otherwise.
+        """
+        if session_id is None:
+            return None
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
+        except Exception:
+            return None
