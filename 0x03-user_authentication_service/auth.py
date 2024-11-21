@@ -86,3 +86,19 @@ class Auth:
             return False
         # check validity of password
         return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
+
+    def create_session(self, email: str) -> Optional[str]:
+        """
+        Create a session for a user and return the session ID.
+        Args:
+            email (str): The email of the user to create a session for.
+        Returns:
+            Optional[str]: The session ID if the user exists, None otherwise.
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            session_id = _generate_uuid()
+            self._db.update_user(user.id, session_id=session_id)
+            return session_id
+        except Exception:
+            return None
