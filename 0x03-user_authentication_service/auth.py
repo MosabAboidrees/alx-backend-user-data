@@ -20,10 +20,8 @@ def _hash_password(password: str) -> str:
     Returns:
         bytes: A salted hash of the input password.
     """
-    # Generate a salt
-    salt = bcrypt.gensalt()
     # Hash the password with the generated salt
-    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     return hashed
 
 def _generate_uuid() -> str:
@@ -33,8 +31,8 @@ def _generate_uuid() -> str:
     Returns:
         str: description
     """
-    id = uuid4()
-    return str(id)
+    uu_id = uuid4()
+    return str(uu_id)
 
 
 class Auth:
@@ -48,7 +46,7 @@ class Auth:
         """
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> Union[None, User]:
+    def register_user(self, email: str, password: str) -> User:
         """
         Register a new user with an email and password.
         Args:
@@ -61,11 +59,11 @@ class Auth:
         """
         try:
             # Check if user already exists
-            self._db.find_user_by(email=email)
+            user = self._db.find_user_by(email=email)
         except NoResultFound:
-
-        # Add user to database
-            return self._db.add_user(email, _hash_password(password))
+            hashed_password = _hash_password(password)
+            user = self._db.add_user(email, hashed_password)
+            return user
         else:
             # if user already exists, throw error
-            raise ValueError('User {} already exists'.format(email))
+            raise ValueError(f'User {email} already exists')
